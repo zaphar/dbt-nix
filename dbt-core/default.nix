@@ -1,5 +1,24 @@
-with import <nixpkgs> {};
-with python38Packages;
+with import (builtins.fetchTarball {
+    name = "nixpkgs-21.05-darwin";
+    url = "https://github.com/nixos/nixpkgs/archive/06b49ba179e3e5b13364ed16aa9907821abc6988.tar.gz";
+    sha256 = "18dij8g8p71a3ymr58bjn9j7bl9d3hkmzfccc0bqk5fi887i4z7z";
+}) {
+    overlays = [
+        # Overlay our SQLParse to be the correct version.
+        (prev: final: {
+            sqlparse = prev.sqlparse.overrideAttrPythonAttrs (oldAttrs: rec {
+                version = "0.2.3";
+                pname = oldAttrs.pname;
+                src = prev.fetchPypi {
+                    inherit pname;
+                    inherit version;
+                    sha256 = "0000000000000000000000000000000000000000000000000000";
+                };
+            });
+        })
+    ];
+};
+with python39Packages;
 
 buildPythonPackage rec {
     pname = "dbt";
@@ -11,7 +30,7 @@ buildPythonPackage rec {
         Babel
         certifi
         cffi
-        charset-normalizer
+        #charset-normalizer
         click
         colorama
         #dbt-extractor
@@ -31,7 +50,7 @@ buildPythonPackage rec {
         networkx
         packaging
         parsedatetime
-        #psycopg2-binary
+        psycopg2
         pycparser
         pyparsing
         pyrsistent
@@ -42,13 +61,14 @@ buildPythonPackage rec {
         pyyaml
         requests
         six
+        # TODO(jwall): We need to override sqlparse here to be exactly version 0.2.3
         sqlparse
         text-unidecode
         typing-extensions
         urllib3
         werkzeug
         zipp
-        snowflake-connector-python
+        #snowflake-connector-python
     ];
     
     doCheck = false;
