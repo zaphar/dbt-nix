@@ -10,6 +10,7 @@ stdenv.mkDerivation {
     python38Full
     python38Packages.virtualenv
     python38Packages.pip
+    python38Packages.setuptools
   ];
   src = null;
   shellHook = ''
