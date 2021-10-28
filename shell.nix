@@ -5,6 +5,7 @@ stdenv.mkDerivation {
   buildInputs = [
     # System requirements.
     readline
+    git
 
     # Python requirements (enough to get a virtualenv going).
     python38Full
