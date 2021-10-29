@@ -8,10 +8,10 @@ stdenv.mkDerivation {
     git
 
     # Python requirements (enough to get a virtualenv going).
-    python38Full
-    python38Packages.virtualenv
-    python38Packages.pip
-    python38Packages.setuptools
+    python39Full
+    python39Packages.virtualenv
+    python39Packages.pip
+    python39Packages.setuptools
   ];
   src = null;
   shellHook = ''
