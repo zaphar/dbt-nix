@@ -20,6 +20,10 @@
             overlays = [ dbt-overlay rust-overlay ];
             defaultPackage = dbt-core;
             packages.dbt-core = dbt-core;
+            defaultApp = {
+                type = "app";
+                program = "${dbt-core}/bin/dbt";
+            };
             devShell = pkgs.mkShell {
                 buildInputs = [ dbt-core ];
             };
