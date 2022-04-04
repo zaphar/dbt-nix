@@ -30,7 +30,6 @@ let inputs = [
         #python-slugify
         #pytimeparse
         #pytz
-        #pyyaml
         #requests
         #sqlparse
         #text-unidecode
@@ -62,6 +61,7 @@ let inputs = [
         sqlparse
         python-dateutil
         msgpack
+        pyyaml
     ];
 in
 buildPythonPackage rec {

@@ -8,8 +8,8 @@
                         nativeBuildInputs = with self.rustPlatform; [
                             cargoSetupHook maturinBuildHook
                         ];
-			# some platforms (MacOS) require this
-			buildInputs = [ self.libiconv ];
+            # some platforms (MacOS) require this
+            buildInputs = [ self.libiconv ];
                         src = pyself.fetchPypi {
                             inherit pname version;
                             sha256 = "sha256-WGcuNvq5iMhJppNAWSDuGEIfJyRcSOX57PSWNp7TGoU=";
@@ -60,13 +60,21 @@
                         # The tests use the network so disable for now.
                         doCheck = false;
                     };
+                    pyyaml = with pyself; buildPythonPackage rec {
+                        pname = "PyYAML";
+                        version = "3.13";
+                        src = fetchPypi {
+                            inherit pname version;
+                            sha256 = "sha256-PvMJIUXptw493Sx61ZvdAlKpTf45SXIWM+QTRN4Apr8=";
+                        };
+                    };
                     mashumaro = pyself.buildPythonPackage rec {
                         pname = "mashumaro";
                         version = "2.9";
                         buildInputs = [
                             msgpack
                             typing-extensions
-                            pyself.pyyaml
+                            pyyaml
                             networkx
                         ];
                         src = pyself.fetchPypi {
