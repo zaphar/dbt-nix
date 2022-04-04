@@ -8,6 +8,8 @@
                         nativeBuildInputs = with self.rustPlatform; [
                             cargoSetupHook maturinBuildHook
                         ];
+			# some platforms (MacOS) require this
+			buildInputs = [ self.libiconv ];
                         src = pyself.fetchPypi {
                             inherit pname version;
                             sha256 = "sha256-WGcuNvq5iMhJppNAWSDuGEIfJyRcSOX57PSWNp7TGoU=";
