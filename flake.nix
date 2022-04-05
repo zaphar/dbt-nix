@@ -34,5 +34,11 @@
             devShell = pkgs.mkShell {
                 packages = [ dbt-core dbt-redshift dbt-postgres pkgs.python39 pkgs.python39Packages.pip ];
             };
+            devShells = {
+                full = pkgs.mkShell { packages = [ dbt-core dbt-postgres dbt-redshift ]; };
+                core = pkgs.mkShell { packages = [ dbt-core ]; };
+                postgres = pkgs.mkShell { packages = [dbt-core dbt-postgres ]; };
+                redshift = pkgs.mkShell { packages = [dbt-core dbt-redshift ]; };
+            };
         });
 }
