@@ -2,47 +2,6 @@
 with pkgs;
 with python39Packages;
 let inputs = [
-        #attrs
-        #Babel
-        #boto3
-        #agate
-        #certifi
-        #cffi
-        #click
-        #colorama
-        #hologram
-        #idna
-        #importlib-metadata
-        #isodate
-        #jinja2
-        #leather
-        #Logbook
-        #markupsafe
-        #msgpack
-        #networkx
-        #packaging
-        #parsedatetime
-        #psycopg2
-        #pycparser
-        #pyparsing
-        #pyrsistent
-        #python-dateutil
-        #python-slugify
-        #pytimeparse
-        #pytz
-        #requests
-        #sqlparse
-        #text-unidecode
-        #typing-extensions
-        #urllib3
-        #werkzeug
-        #zipp
-        #pyopenssl
-        #vcversioner
-        #six
-        #snowflake-connector-python
-        #charset-normalizer
-        #dbt-postgres
         jsonschema
         networkx
         mashumaro

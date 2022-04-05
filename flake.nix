@@ -11,21 +11,30 @@
     outputs = {self, nixpkgs, rust-overlay, flake-utils, ...}:
     flake-utils.lib.eachDefaultSystem(system:
         let
-            dbt-overlay = import ./nix/dbt-core/overlay.nix;
+            dbt-overlay = import ./nix/overlay.nix;
             # TODO(jwall): Is this overlay strictly necessary?
             pkgs = import nixpkgs {inherit system; overlays = [ dbt-overlay rust-overlay.overlay ]; };
             dbt-core = import ./nix/dbt-core/default.nix { inherit pkgs; };
+            dbt-postgres = import ./nix/dbt-postgres/default.nix { inherit pkgs dbt-core; };
+            dbt-redshift = import ./nix/dbt-redshift/default.nix { inherit pkgs dbt-core dbt-postgres; };
         in
         {
+            dbt-core = dbt-core;
+            dbt-redshift = dbt-redshift;
+
             overlays = [ dbt-overlay rust-overlay ];
             defaultPackage = dbt-core;
-            packages.dbt-core = dbt-core;
+            packages = {
+                dbt-core = dbt-core;
+                dbt-redshift = dbt-redshift;
+            };
             defaultApp = {
                 type = "app";
                 program = "${dbt-core}/bin/dbt";
             };
+            # Okay now nix develop should work.
             devShell = pkgs.mkShell {
-                buildInputs = [ dbt-core ];
+                packages = [ dbt-core dbt-redshift dbt-postgres pkgs.python39 pkgs.python39Packages.pip ];
             };
         });
 }

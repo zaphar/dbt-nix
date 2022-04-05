@@ -8,8 +8,8 @@
                         nativeBuildInputs = with self.rustPlatform; [
                             cargoSetupHook maturinBuildHook
                         ];
-            # some platforms (MacOS) require this
-            buildInputs = [ self.libiconv ];
+                        # some platforms (MacOS) require this
+                        buildInputs = [ self.libiconv ];
                         src = pyself.fetchPypi {
                             inherit pname version;
                             sha256 = "sha256-WGcuNvq5iMhJppNAWSDuGEIfJyRcSOX57PSWNp7TGoU=";
@@ -118,6 +118,22 @@
                             sha256 = "sha256-ptWEM94K6AA0fKsfowQ867q+i6qdKeZo8cdoy4ejM8Y=";
                         };
                     });
+                    psycopg2 = pysuper.psycopg2.overrideAttrs (oldAttrs: rec {
+                        pname = "psycopg2";
+                        version = "2.8";
+                        src = pyself.fetchPypi {
+                            inherit pname version;
+                            sha256 = "sha256-ScWDjZDoMheQnbN4nTChBThbXmluxRaM2mRVRsVC81o=";
+                        };
+                    });
+                    #jinja2_3 = pysuper.jinja2.overrideAttrs (oldAttrs: rec {
+                    #    version = "3.0.0";
+                    #    pname = oldAttrs.pname;
+                    #    src = pyself.fetchPypi {
+                    #        inherit pname version;
+                    #        sha256 = "sha256-6o192BTOnfbeanYex/HKyYr+MFuM3Eqq5OEUuNjOJMU=";
+                    #    };
+                    #});
                     logbook = with pyself; buildPythonPackage rec {
                         pname = "Logbook";
                         version = "1.5.3";
@@ -130,10 +146,10 @@
                     };
                     typing-extensions = with pyself; buildPythonPackage rec {
                         pname = "typing_extensions";
-                        version = "3.7.4.3";
+                        version = "3.10.0.2";
                         src = fetchPypi {
                             inherit pname version;
-                            sha256 = "sha256-mdQHO2F9MCiPVp0/E9K9dUjDp+TI3ofbCanSm7Okpgw=";
+                            sha256 = "sha256-SfddFv8R8c0ljhuYjM/4KjylVwIX162MX0ggXdmaZ34=";
                         };
                     };
                     python-dateutil = pysuper.python-dateutil.overrideAttrs (oldAttrs: rec {
@@ -173,23 +189,6 @@
                     #      license = licenses.isc;
                     #    };
                     #};
-                    #vcversioner = pyself.buildPythonPackage rec {
-                    #    version = "2.16.0.0";
-                    #    pname = "vcversioner";
-                    #    src = pyself.fetchPypi {
-                    #        inherit pname version;
-                    #        sha256 = "sha256-2uYMF6R5eB9EpAEHAYM/GCkUCx7szSWHYqdJdKoG4Zs=";
-                    #    };
-                    #};
-                    #snowflake-connector-python = pysuper.snowflake-connector-python.overrideAttrs (oldAttrs: rec {
-                    #    version = "2.4.1";
-                    #    pname = oldAttrs.pname;
-                    #    src = pyself.fetchPypi {
-                    #        inherit pname;
-                    #        inherit version;
-                    #        sha256 = "1bms4z3zjxzzg0m9smgf0h5cm49h8a41c8w3vyqvx9q22bk814aw";
-                    #    };
-                    #});
                 });
             };
         })
