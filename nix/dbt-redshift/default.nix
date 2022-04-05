@@ -7,6 +7,9 @@ let inputs = [
     typing-extensions
     jinja2
     dbt-postgres
+    # we needed to override the test phase so
+    # we have to include it from the overlay here.
+    s3transfer
     #jinja2_3
 ];
 in

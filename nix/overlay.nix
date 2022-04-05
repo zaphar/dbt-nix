@@ -126,14 +126,10 @@
                             sha256 = "sha256-ScWDjZDoMheQnbN4nTChBThbXmluxRaM2mRVRsVC81o=";
                         };
                     });
-                    #jinja2_3 = pysuper.jinja2.overrideAttrs (oldAttrs: rec {
-                    #    version = "3.0.0";
-                    #    pname = oldAttrs.pname;
-                    #    src = pyself.fetchPypi {
-                    #        inherit pname version;
-                    #        sha256 = "sha256-6o192BTOnfbeanYex/HKyYr+MFuM3Eqq5OEUuNjOJMU=";
-                    #    };
-                    #});
+                    s3transfer = pysuper.s3transfer.overrideAttrs (oldAttres: rec {
+                        # The tests use the network so disable for now.
+                        doCheck = false;
+                    });
                     logbook = with pyself; buildPythonPackage rec {
                         pname = "Logbook";
                         version = "1.5.3";
