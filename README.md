@@ -13,3 +13,4 @@ dbt --version
 
 * packages.`${system}`.dbt-core - the dbt-core cli
 * packages.`${system}`.dbt-redshift - the dbt-redshift plugin (also includes dbt-postgres)
+* packages.`${system}`.dbt-postgres - the dbt-postgres plugin

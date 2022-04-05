@@ -19,14 +19,12 @@
             dbt-redshift = import ./nix/dbt-redshift/default.nix { inherit pkgs dbt-core dbt-postgres; };
         in
         {
-            dbt-core = dbt-core;
-            dbt-redshift = dbt-redshift;
+            inherit dbt-core dbt-postgres dbt-redshift;
 
             overlays = [ dbt-overlay rust-overlay ];
             defaultPackage = dbt-core;
             packages = {
-                dbt-core = dbt-core;
-                dbt-redshift = dbt-redshift;
+                inherit dbt-core dbt-postgres dbt-redshift;
             };
             defaultApp = {
                 type = "app";
