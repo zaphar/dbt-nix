@@ -40,7 +40,7 @@
                 core = pkgs.mkShell { packages = [ dbt-core ]; };
                 postgres = pkgs.mkShell { packages = [dbt-core dbt-postgres ]; };
                 redshift = pkgs.mkShell { packages = [dbt-core dbt-redshift ]; };
-                sqlite = pkgs.mkShell { packages = [dbt-core dbt-sqlite pkgs.sqlite ]; };
+                sqlite = pkgs.mkShell { packages = [dbt-core dbt-sqlite ]; };
             };
         });
 }
