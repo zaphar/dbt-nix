@@ -17,14 +17,15 @@
             dbt-core = import ./nix/dbt-core/default.nix { inherit pkgs; };
             dbt-postgres = import ./nix/dbt-postgres/default.nix { inherit pkgs dbt-core; };
             dbt-redshift = import ./nix/dbt-redshift/default.nix { inherit pkgs dbt-core dbt-postgres; };
+            dbt-sqlite = import ./nix/dbt-sqlite/default.nix { inherit pkgs dbt-core; };
         in
         {
-            inherit dbt-core dbt-postgres dbt-redshift;
+            inherit dbt-core dbt-postgres dbt-redshift dbt-sqlite;
 
             overlays = [ dbt-overlay rust-overlay ];
             defaultPackage = dbt-core;
             packages = {
-                inherit dbt-core dbt-postgres dbt-redshift;
+                inherit dbt-core dbt-postgres dbt-redshift dbt-sqlite;
             };
             defaultApp = {
                 type = "app";
@@ -35,10 +36,11 @@
                 packages = [ dbt-core dbt-redshift dbt-postgres pkgs.python39 pkgs.python39Packages.pip ];
             };
             devShells = {
-                full = pkgs.mkShell { packages = [ dbt-core dbt-postgres dbt-redshift ]; };
+                full = pkgs.mkShell { packages = [ dbt-core dbt-postgres dbt-redshift dbt-sqlite ]; };
                 core = pkgs.mkShell { packages = [ dbt-core ]; };
                 postgres = pkgs.mkShell { packages = [dbt-core dbt-postgres ]; };
                 redshift = pkgs.mkShell { packages = [dbt-core dbt-redshift ]; };
+                sqlite = pkgs.mkShell { packages = [dbt-core dbt-sqlite pkgs.sqlite ]; };
             };
         });
 }
