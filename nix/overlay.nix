@@ -3,7 +3,7 @@
                 packageOverrides =  (pyself: pysuper: rec {
                     dbt-extractor = pyself.buildPythonPackage rec {
                         pname = "dbt_extractor";
-                        version = "0.4.0";
+                        version = "0.4.1";
                         format = "pyproject";
                         nativeBuildInputs = with self.rustPlatform; [
                             cargoSetupHook maturinBuildHook
@@ -12,12 +12,12 @@
                         buildInputs = [ self.libiconv ];
                         src = pyself.fetchPypi {
                             inherit pname version;
-                            sha256 = "sha256-WGcuNvq5iMhJppNAWSDuGEIfJyRcSOX57PSWNp7TGoU=";
+                            sha256 = "sha256-dbHGZWmewPH/zhuj13b3386AIVbyLnCnucjwtNfoD0I=";
                         };
                         cargoDeps = self.rustPlatform.fetchCargoTarball {
                           inherit src;
                           name = "${pname}-${version}";
-                          hash = "sha256-FXMIatCTZJSLaABYO/lcBsONXw8FPNQmcm/tRwkSE54=";
+                          hash = "sha256-COuFqMxgzPEldfdP9WTZjUq504bLF+qopZYfDQeWLzM=";
                           patchPhase = ''
                           pwd
                           ls
@@ -41,15 +41,15 @@
                         # The tests use the network so disable for now.
                         doCheck = false;
                     };
-                    colorama = pysuper.colorama.overrideAttrs (oldAttrs: rec {
-                        version = "0.3.9";
-                        pname = oldAttrs.pname;
-                        src = pyself.fetchPypi {
-                            inherit pname;
-                            inherit version;
-                            sha256 = "1wd1szk0z3073ghx26ynw43gnc140ibln1safgsis6s6z3s25ss8";
-                        };
-                    });
+                    #colorama = pysuper.colorama.overrideAttrs (oldAttrs: rec {
+                    #    version = "0.3.9";
+                    #    pname = oldAttrs.pname;
+                    #    src = pyself.fetchPypi {
+                    #        inherit pname;
+                    #        inherit version;
+                    #        sha256 = "1wd1szk0z3073ghx26ynw43gnc140ibln1safgsis6s6z3s25ss8";
+                    #    };
+                    #});
                     networkx = pyself.buildPythonPackage rec {
                         pname = "networkx";
                         version = "2.7.1";
@@ -72,7 +72,7 @@
                         pname = "mashumaro";
                         version = "2.9";
                         buildInputs = [
-                            msgpack
+                            pysuper.msgpack
                             typing-extensions
                             pyyaml
                             networkx
@@ -110,6 +110,15 @@
                             sha256 = "sha256-rKv3Vy2w5/XL9pg9SV7vVAgfcb45IzDrOq25zLOdqqQ=";
                         };
                     };
+                    markupsafe = pysuper.markupsafe.overrideAttrs (oldAttrs: rec {
+                        version = "2.0.1";
+                        pname = oldAttrs.pname;
+                        src = pyself.fetchPypi {
+                            inherit version;
+                            pname = "MarkupSafe";
+                            sha256 = "sha256-WUxngH+xYjizDES99082wCzfItHIzake+KDtjav1Ygo=";
+                        };
+                    });
                     jinja2 = pysuper.jinja2.overrideAttrs (oldAttrs: rec {
                         version = "2.11.3";
                         pname = oldAttrs.pname;
@@ -118,18 +127,18 @@
                             sha256 = "sha256-ptWEM94K6AA0fKsfowQ867q+i6qdKeZo8cdoy4ejM8Y=";
                         };
                     });
-                    psycopg2 = pysuper.psycopg2.overrideAttrs (oldAttrs: rec {
+                    psycopg2_2_8 = pysuper.psycopg2.overrideAttrs (oldAttrs: rec {
                         pname = "psycopg2";
-                        version = "2.8";
+                        version = "2.8.1";
                         src = pyself.fetchPypi {
                             inherit pname version;
-                            sha256 = "sha256-ScWDjZDoMheQnbN4nTChBThbXmluxRaM2mRVRsVC81o=";
+                            sha256 = "sha256-tKR1zofqvAYH4GijxwTQqgggI37XjUk7ji2IDrc81/4=";
                         };
                     });
-                    s3transfer = pysuper.s3transfer.overrideAttrs (oldAttres: rec {
-                        # The tests use the network so disable for now.
-                        doCheck = false;
-                    });
+                    #s3transfer = pysuper.s3transfer.overrideAttrs (oldAttres: rec {
+                    #    # The tests use the network so disable for now.
+                    #    doCheck = false;
+                    #});
                     logbook = with pyself; buildPythonPackage rec {
                         pname = "Logbook";
                         version = "1.5.3";
@@ -148,24 +157,24 @@
                             sha256 = "sha256-SfddFv8R8c0ljhuYjM/4KjylVwIX162MX0ggXdmaZ34=";
                         };
                     };
-                    python-dateutil = pysuper.python-dateutil.overrideAttrs (oldAttrs: rec {
-                        pname = oldAttrs.pname;
-                        version = "2.8.0";
-                        src = pyself.fetchPypi {
-                            inherit pname version;
-                            sha256 = "sha256-yJgF9vTWTbIe2Wb9oTj4pe16T9vBqO4ynOG3Tjx02p4=";
-                        };
-                    });
-                    msgpack = pysuper.msgpack.overrideAttrs (oldAttrs: rec {
-                        pname = oldAttrs.pname;
-                        version = "0.5.6";
-                        src = pyself.fetchPypi {
-                            inherit pname version;
-                            sha256 = "sha256-DujIyFqmUb46oM0AW1kxdp6qZYyUjOeUKHZvG9Rq4sM=";
-                        };
-                        doCheck = false;
-                        installCheckPhase = "";
-                    });
+                    #python-dateutil = pysuper.python-dateutil.overrideAttrs (oldAttrs: rec {
+                    #    pname = oldAttrs.pname;
+                    #    version = "2.8.0";
+                    #    src = pyself.fetchPypi {
+                    #        inherit pname version;
+                    #        sha256 = "sha256-yJgF9vTWTbIe2Wb9oTj4pe16T9vBqO4ynOG3Tjx02p4=";
+                    #    };
+                    #});
+                    #msgpack = pysuper.msgpack.overrideAttrs (oldAttrs: rec {
+                    #    pname = oldAttrs.pname;
+                    #    version = "0.5.6";
+                    #    src = pyself.fetchPypi {
+                    #        inherit pname version;
+                    #        sha256 = "sha256-DujIyFqmUb46oM0AW1kxdp6qZYyUjOeUKHZvG9Rq4sM=";
+                    #    };
+                    #    doCheck = false;
+                    #    installCheckPhase = "";
+                    #});
                     #certifi = pyself.buildPythonPackage rec {
                     #    version = "2020.6.20";
                     #    pname = "certifi";

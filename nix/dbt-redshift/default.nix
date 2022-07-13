@@ -1,4 +1,4 @@
-{pkgs, dbt-core, dbt-postgres}:
+{pkgs, dbt-core, dbt-postgres, version}:
 with pkgs;
 with python39Packages;
 let inputs = [
@@ -15,12 +15,12 @@ let inputs = [
 in
 buildPythonPackage rec {
     pname = "dbt-redshift";
-    version = "1.0.0";
+    inherit version;
     buildInputs = inputs;
     propagatedBuildInputs = inputs;
     doCheck = false;
     src = fetchPypi {
         inherit pname version;
-        sha256 = "sha256-ZBkhKxxUA1jyubMkCPzmvqyTh8QPgQ2Y33gEOV6Sc78=";
+        sha256 = "sha256-CNkCORCVdAtE14CxKGpheXkOq4QyTq/huR0IWQzHWmI=";
     };
 }

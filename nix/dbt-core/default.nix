@@ -1,4 +1,4 @@
-{pkgs}:
+{pkgs, version}:
 with pkgs;
 with python39Packages;
 let inputs = [
@@ -21,11 +21,12 @@ let inputs = [
         python-dateutil
         msgpack
         pyyaml
+        markupsafe
     ];
 in
 buildPythonPackage rec {
     pname = "dbt-core";
-    version = "1.0.0";
+    inherit version;
 
     buildInputs = inputs;
 
@@ -35,7 +36,6 @@ buildPythonPackage rec {
 
     src = fetchPypi {
         inherit pname version;
-        sha256 = "sha256-kL3gHQeLHWc9xJC53v/wfn87cCuSDGX+rm+yfgfOc9I=";
+        sha256 = "sha256-PjPOW+dODU+fKK12tLHeVcs0PUxTw6j5jCRVGIGu3z4=";
     };
-
 }

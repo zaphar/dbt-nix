@@ -10,14 +10,15 @@
 
     outputs = {self, nixpkgs, rust-overlay, flake-utils, ...}:
     flake-utils.lib.eachDefaultSystem(system:
-        let
+    let
+            version = "1.1.0";
             dbt-overlay = import ./nix/overlay.nix;
             # TODO(jwall): Is this overlay strictly necessary?
             pkgs = import nixpkgs {inherit system; overlays = [ dbt-overlay rust-overlay.overlay ]; };
-            dbt-core = import ./nix/dbt-core/default.nix { inherit pkgs; };
-            dbt-postgres = import ./nix/dbt-postgres/default.nix { inherit pkgs dbt-core; };
-            dbt-redshift = import ./nix/dbt-redshift/default.nix { inherit pkgs dbt-core dbt-postgres; };
-            dbt-sqlite = import ./nix/dbt-sqlite/default.nix { inherit pkgs dbt-core; };
+            dbt-core = import ./nix/dbt-core/default.nix { inherit pkgs version; };
+            dbt-postgres = import ./nix/dbt-postgres/default.nix { inherit pkgs dbt-core version; };
+            dbt-redshift = import ./nix/dbt-redshift/default.nix { inherit pkgs dbt-core dbt-postgres version; };
+            dbt-sqlite = import ./nix/dbt-sqlite/default.nix { inherit pkgs dbt-core version; };
         in
         {
             inherit dbt-core dbt-postgres dbt-redshift dbt-sqlite;
